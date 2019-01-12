@@ -1,6 +1,4 @@
-Tempo total: 48558 ms - Registos: 1000000
-Tempo total: 328 ms - Registos: 10
-Tempo total: 7 ms - Registos: 10
-Tempo total: 35 ms - Registos: 10
-Tempo total: 53 ms - Registos: 10
-Tempo total: 53 ms - Registos: 10
+Tempo total: 23835 ms - Registos: 100000
+Tempo total: 14371 ms - Registos: 100000
+Tempo total: 61662 ms - Registos: 1000000
+Tempo total: 97783 ms - Registos: 1000000

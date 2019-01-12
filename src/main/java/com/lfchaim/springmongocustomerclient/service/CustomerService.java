@@ -33,10 +33,10 @@ public class CustomerService {
 				.defaultUriVariables(Collections.singletonMap("url", "http://localhost:8080")).build();
 	}
 
-	public void generateCustomer(long quantity) {
+	public void generateCustomer(long quantity, int numThread) {
 		CustomerUtil util = new CustomerUtil();
 		Calendar c1 = Calendar.getInstance();
-		ExecutorService executor = Executors.newFixedThreadPool(1000);
+		ExecutorService executor = Executors.newFixedThreadPool(numThread);
 		for( long i = 0; i < quantity; i++ ) {
 			String name = util.getFullName();
 			Map<String, Object> map = new LinkedHashMap<String,Object>();
@@ -53,11 +53,12 @@ public class CustomerService {
 			String json = util.jsonFromMap(map);
 			executor.submit(() -> {
 		        try {
+		        	Calendar ct1 = Calendar.getInstance();
 		        	//Mono<ClientResponse> resp = WebClient.create().post().uri("http://localhost:8080/customer").accept(MediaType.APPLICATION_JSON).body(BodyInserters.fromObject(map)).exchange();
 		        	Mono<ClientResponse> resp = WebClient.create().post().uri("http://localhost:8080/customer").accept(MediaType.APPLICATION_JSON).body(BodyInserters.fromObject(map)).exchange();
-		        	
-		        	System.out.println(resp.block().toString());
-		        	System.out.println("Registro enviado para: "+json);
+		        	Calendar ct2 = Calendar.getInstance();
+		        	System.out.println(resp.block().toString()+" name: "+name+" time: "+(ct2.getTimeInMillis()-ct1.getTimeInMillis())+" ms");
+		        	//System.out.println("Registro enviado para: "+json);
 		        } catch( Exception e ) {
 		        	e.printStackTrace();
 		        	Thread.currentThread().interrupt();
